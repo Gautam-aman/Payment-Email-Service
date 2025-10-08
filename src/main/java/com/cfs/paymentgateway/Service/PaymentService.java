@@ -17,10 +17,10 @@ import java.util.UUID;
 @Service
 public class PaymentService {
 
-    @Value ("{rzp_key_id}")
+    @Value ("${rzp_key_id}")
     private String keyId;
 
-    @Value ("{rzp_key_secret}")
+    @Value ("${rzp_key_secret}")
     private String keySecret;
 
     @Autowired
@@ -46,4 +46,10 @@ public class PaymentService {
 
     }
 
+    public void updateOrderStaus(String orderId, String paymentId, String status) {
+        PaymentOrder order = paymentRepo.findByPaymentOrderId(orderId);
+        order.setStatus(status);
+        paymentRepo.save(order);
+        paymentRepo.save(order);
+    }
 }
