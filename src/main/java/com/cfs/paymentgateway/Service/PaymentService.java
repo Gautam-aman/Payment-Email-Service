@@ -26,6 +26,9 @@ public class PaymentService {
     @Autowired
     private PaymentRepo paymentRepo;
 
+    private EmailService emailService;
+    private RazorpayClient razorpayClient;
+
     public String createOrder(PaymentOrder paymentOrderDetails) throws RazorpayException {
 
         RazorpayClient razorpayClient  = new RazorpayClient(keyId , keySecret);
@@ -51,5 +54,6 @@ public class PaymentService {
         order.setStatus(status);
         paymentRepo.save(order);
         paymentRepo.save(order);
+        emailService.sendEmail(order.getEmail() , "Payment Success" , "Hey Welcome" , order.getAmount());
     }
 }
